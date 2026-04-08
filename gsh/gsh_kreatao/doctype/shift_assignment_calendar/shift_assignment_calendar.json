@@ -1,0 +1,100 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2024-08-13 11:11:45.026670",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "department",
+  "column_break_wauy",
+  "naming_series",
+  "section_break_rocr",
+  "from_date",
+  "column_break_ikoi",
+  "to_date",
+  "fetch_shift_assignment",
+  "section_break_ybmc",
+  "shift_assignment_calendar_table"
+ ],
+ "fields": [
+  {
+   "fieldname": "column_break_wauy",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_rocr",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "From Date"
+  },
+  {
+   "fieldname": "column_break_ikoi",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "To Date"
+  },
+  {
+   "fieldname": "fetch_shift_assignment",
+   "fieldtype": "Button",
+   "label": "Fetch Shift Assignment"
+  },
+  {
+   "fieldname": "section_break_ybmc",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "shift_assignment_calendar_table",
+   "fieldtype": "Table",
+   "label": "Shift Assignment Calendar Table",
+   "options": "Shift Assignment Calendar Table"
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Department",
+   "options": "Department"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "AC-.YY.-.#####",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-08-20 15:45:25.201286",
+ "modified_by": "Administrator",
+ "module": "GSH Kreatao",
+ "name": "Shift Assignment Calendar",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,259 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2024-09-28 10:39:25.917520",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_ftzm",
+  "amended_from",
+  "naming_series",
+  "section_break_ruxp",
+  "problem_statement",
+  "column_break_osjf",
+  "incident_report_evaluation",
+  "medication_error_reporting_form",
+  "incident_report_form",
+  "cause_1_section",
+  "cause_1_1",
+  "cause_1_2",
+  "cause_1_3",
+  "cause_1_4",
+  "cause_2_section",
+  "cause_2_1",
+  "cause_2_2",
+  "cause_2_3",
+  "cause_2_4",
+  "cause_3_section",
+  "cause_3_1",
+  "cause_3_2",
+  "cause_3_3",
+  "cause_3_4",
+  "cause_4_section",
+  "cause_4_1",
+  "cause_4_2",
+  "cause_4_3",
+  "cause_4_4",
+  "section_break_rmxc",
+  "assigned_person",
+  "employee_name",
+  "date_of_report",
+  "date_of_closing_capa"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_ftzm",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Fish Bone Analysis",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "section_break_ruxp",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "problem_statement",
+   "fieldtype": "Data",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Problem Statement"
+  },
+  {
+   "fieldname": "cause_1_section",
+   "fieldtype": "Section Break",
+   "label": "Cause 1"
+  },
+  {
+   "fieldname": "cause_1_1",
+   "fieldtype": "Data",
+   "label": "Cause 1"
+  },
+  {
+   "fieldname": "cause_1_2",
+   "fieldtype": "Data",
+   "label": "Cause 1"
+  },
+  {
+   "fieldname": "cause_1_3",
+   "fieldtype": "Data",
+   "label": "Cause 1"
+  },
+  {
+   "fieldname": "cause_1_4",
+   "fieldtype": "Data",
+   "label": "Cause 1"
+  },
+  {
+   "fieldname": "cause_2_section",
+   "fieldtype": "Section Break",
+   "label": "Cause 2"
+  },
+  {
+   "fieldname": "cause_2_1",
+   "fieldtype": "Data",
+   "label": "Cause 2"
+  },
+  {
+   "fieldname": "cause_2_2",
+   "fieldtype": "Data",
+   "label": "Cause 2"
+  },
+  {
+   "fieldname": "cause_2_3",
+   "fieldtype": "Data",
+   "label": "Cause 2"
+  },
+  {
+   "fieldname": "cause_2_4",
+   "fieldtype": "Data",
+   "label": "Cause 2"
+  },
+  {
+   "fieldname": "cause_3_section",
+   "fieldtype": "Section Break",
+   "label": "Cause 3"
+  },
+  {
+   "fieldname": "cause_3_1",
+   "fieldtype": "Data",
+   "label": "Cause 3"
+  },
+  {
+   "fieldname": "cause_3_2",
+   "fieldtype": "Data",
+   "label": "Cause 3"
+  },
+  {
+   "fieldname": "cause_3_3",
+   "fieldtype": "Data",
+   "label": "Cause 3"
+  },
+  {
+   "fieldname": "cause_3_4",
+   "fieldtype": "Data",
+   "label": "Cause 3"
+  },
+  {
+   "fieldname": "cause_4_section",
+   "fieldtype": "Section Break",
+   "label": "Cause 4"
+  },
+  {
+   "fieldname": "cause_4_1",
+   "fieldtype": "Data",
+   "label": "Cause 4"
+  },
+  {
+   "fieldname": "cause_4_2",
+   "fieldtype": "Data",
+   "label": "Cause 4"
+  },
+  {
+   "fieldname": "cause_4_3",
+   "fieldtype": "Data",
+   "label": "Cause 4"
+  },
+  {
+   "fieldname": "cause_4_4",
+   "fieldtype": "Data",
+   "label": "Cause 4"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Naming Series",
+   "options": "FBA-.YY.-"
+  },
+  {
+   "fieldname": "column_break_osjf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "incident_report_evaluation",
+   "fieldtype": "Link",
+   "label": "Incident Report Evaluation",
+   "options": "Incident Report Evaluation"
+  },
+  {
+   "fetch_from": "incident_report_evaluation.medication_error_reporting_form",
+   "fieldname": "medication_error_reporting_form",
+   "fieldtype": "Link",
+   "label": "Medication Error Reporting Form",
+   "options": "Medication Error Reporting Form"
+  },
+  {
+   "fetch_from": "incident_report_evaluation.incident_report_form",
+   "fieldname": "incident_report_form",
+   "fieldtype": "Link",
+   "label": "Incident Report Form",
+   "options": "Incident Report Form"
+  },
+  {
+   "fieldname": "section_break_rmxc",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "assigned_person",
+   "fieldtype": "Link",
+   "label": "Assigned Person",
+   "options": "Employee"
+  },
+  {
+   "fetch_from": "assigned_person.employee_name",
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "label": "Employee Name"
+  },
+  {
+   "fetch_from": "incident_report_evaluation.date_of_event",
+   "fieldname": "date_of_closing_capa",
+   "fieldtype": "Date",
+   "label": "Date of Closing CAPA"
+  },
+  {
+   "fetch_from": "incident_report_evaluation.date_of_incident",
+   "fieldname": "date_of_report",
+   "fieldtype": "Date",
+   "label": "Date of Report"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-09-30 16:19:17.176258",
+ "modified_by": "Administrator",
+ "module": "CAPA",
+ "name": "Fish Bone Analysis",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

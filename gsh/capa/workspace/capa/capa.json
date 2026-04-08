@@ -1,0 +1,70 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"uQ1bzCYpSK\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">CAPA</span>\",\"col\":12}},{\"id\":\"yzOQzGdbzW\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Incident Report Form\",\"col\":3}},{\"id\":\"Fld_11VQyo\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Medication Error Reporting Form\",\"col\":3}},{\"id\":\"TXyZDFaLnY\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Incident Report Evaluation\",\"col\":3}},{\"id\":\"U1AD3BxPjJ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Five Whys Analysis Tool\",\"col\":3}},{\"id\":\"rIPQH7fc9D\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Fish Bone Analysis\",\"col\":3}}]",
+ "creation": "2024-07-25 13:52:14.447127",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "healthcare",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "CAPA",
+ "links": [],
+ "modified": "2024-10-02 21:43:00.751608",
+ "modified_by": "Administrator",
+ "module": "CAPA",
+ "name": "CAPA",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 48.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Incident Report Form",
+   "link_to": "Incident Report Form",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Incident Report Evaluation",
+   "link_to": "Incident Report Evaluation",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Fish Bone Analysis",
+   "link_to": "Fish Bone Analysis",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Five Whys Analysis Tool",
+   "link_to": "Five whys Analysis Tool",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Medication Error Reporting Form",
+   "link_to": "Medication Error Reporting Form",
+   "stats_filter": "[]",
+   "type": "DocType"
+  }
+ ],
+ "title": "CAPA"
+}

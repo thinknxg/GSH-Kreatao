@@ -1,0 +1,180 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2024-09-18 15:55:18.601029",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "date_of_incident",
+  "meeting_date",
+  "naming_series",
+  "column_break_rpzb",
+  "reported_by",
+  "employee_name",
+  "date_of_event",
+  "incident_report_form",
+  "medication_error_reporting_form",
+  "section_break_dgii",
+  "text1",
+  "text2",
+  "section_break_qvto",
+  "corrective_action",
+  "section_break_cvyn",
+  "text3",
+  "text4",
+  "text5",
+  "text6",
+  "text7",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fetch_from": "incident_report_form.time_and_date_of_incident",
+   "fieldname": "date_of_incident",
+   "fieldtype": "Datetime",
+   "label": "Date Of Incident Report:"
+  },
+  {
+   "fieldname": "meeting_date",
+   "fieldtype": "Datetime",
+   "label": "Meeting Date & time"
+  },
+  {
+   "default": "IRE-.YY.-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "naming series",
+   "options": "IRE-.YY.-",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_rpzb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "incident_report_form.employee_id_number",
+   "fieldname": "reported_by",
+   "fieldtype": "Link",
+   "label": "Reported by",
+   "options": "Employee"
+  },
+  {
+   "fetch_from": "reported_by.employee_name",
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "label": "Employee Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "date_of_event",
+   "fieldtype": "Date",
+   "label": "Date Of Event Closure"
+  },
+  {
+   "fieldname": "incident_report_form",
+   "fieldtype": "Link",
+   "label": "Incident Report Form",
+   "options": "Incident Report Form"
+  },
+  {
+   "fieldname": "medication_error_reporting_form",
+   "fieldtype": "Link",
+   "label": "Medication Error Reporting Form",
+   "options": "Medication Error Reporting Form"
+  },
+  {
+   "fieldname": "section_break_dgii",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fetch_from": "incident_report_form.text1",
+   "fieldname": "text1",
+   "fieldtype": "Text",
+   "label": "Description of the Incident Report"
+  },
+  {
+   "fieldname": "text2",
+   "fieldtype": "Text",
+   "label": "Immediate Corrective Action Taken"
+  },
+  {
+   "fieldname": "section_break_qvto",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "corrective_action",
+   "fieldtype": "Select",
+   "label": "Was the corrective action taken appropriate",
+   "options": "\nYes\nNo"
+  },
+  {
+   "fieldname": "section_break_cvyn",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "text3",
+   "fieldtype": "Text",
+   "label": "Root Cause/Investigation (Error Analysis: fishbone analysis or 5X why)"
+  },
+  {
+   "fieldname": "text4",
+   "fieldtype": "Text",
+   "label": "Risk and Impact Assessment"
+  },
+  {
+   "fieldname": "text5",
+   "fieldtype": "Text",
+   "label": "Corrective and Preventative Action Plan Recommended"
+  },
+  {
+   "fieldname": "text6",
+   "fieldtype": "Text",
+   "label": "Corrective and Preventative Action Taken by Team (Quality team/Management/Departmental)"
+  },
+  {
+   "fieldname": "text7",
+   "fieldtype": "Text",
+   "label": "Further action required/taken (along with verification method)"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Incident Report Evaluation",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-09-27 16:05:28.509879",
+ "modified_by": "Administrator",
+ "module": "CAPA",
+ "name": "Incident Report Evaluation",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "track_seen": 1,
+ "track_views": 1
+}

@@ -1,0 +1,190 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2025-12-30 12:12:38.653093",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "health_facility",
+  "sponsers_name",
+  "location_of_institution",
+  "state",
+  "section_break_eumw",
+  "employee",
+  "employee_name",
+  "designation",
+  "nationality",
+  "passport_number",
+  "civil_id_number",
+  "start_date",
+  "end_date",
+  "approved_on",
+  "section_break_wmsv",
+  "content_1",
+  "section_break_xdun",
+  "content_2",
+  "section_break_kyzw",
+  "naming_series",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "health_facility",
+   "fieldtype": "Link",
+   "label": "Name of Health Facility",
+   "options": "Company"
+  },
+  {
+   "default": "Gulf Integrated Medical Services Company LLC",
+   "fieldname": "sponsers_name",
+   "fieldtype": "Data",
+   "label": "Sponser's Name"
+  },
+  {
+   "default": "Muscat",
+   "fieldname": "location_of_institution",
+   "fieldtype": "Data",
+   "label": "Location of the institution/governorate"
+  },
+  {
+   "default": "Matrah",
+   "fieldname": "state",
+   "fieldtype": "Data",
+   "label": "State"
+  },
+  {
+   "fieldname": "section_break_eumw",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "in_global_search": 1,
+   "in_standard_filter": 1,
+   "label": "Employee",
+   "options": "Employee"
+  },
+  {
+   "fetch_from": "employee.employee_name",
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_standard_filter": 1,
+   "label": "Name"
+  },
+  {
+   "fetch_from": "employee.custom_country_of_origin",
+   "fieldname": "nationality",
+   "fieldtype": "Data",
+   "label": "Nationality"
+  },
+  {
+   "fetch_from": "employee.passport_number",
+   "fieldname": "passport_number",
+   "fieldtype": "Data",
+   "label": "Passport Number"
+  },
+  {
+   "fetch_from": "employee.date_of_joining",
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "End Date"
+  },
+  {
+   "fieldname": "section_break_wmsv",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "content_1",
+   "fieldtype": "Text Editor",
+   "label": "Content1"
+  },
+  {
+   "fieldname": "section_break_xdun",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "content_2",
+   "fieldtype": "Text Editor",
+   "label": "Content2"
+  },
+  {
+   "fieldname": "section_break_kyzw",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Naming Series",
+   "options": "HMIS/.YYYY/HR/.###",
+   "print_hide": 1,
+   "report_hide": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Employment Certificate",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fetch_from": "employee.designation",
+   "fieldname": "designation",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Designation"
+  },
+  {
+   "fieldname": "approved_on",
+   "fieldtype": "Date",
+   "hidden": 1,
+   "label": "Approved On",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "employee.custom_civil_id_number",
+   "fieldname": "civil_id_number",
+   "fieldtype": "Data",
+   "label": "Civil ID Number"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-04-07 20:56:48.585762",
+ "modified_by": "Administrator",
+ "module": "GSH Kreatao",
+ "name": "Employment Certificate",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

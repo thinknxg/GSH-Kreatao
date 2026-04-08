@@ -1,0 +1,192 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2024-07-24 08:33:32.049416",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "date_of_event",
+  "location_of_event",
+  "other_location_of_event",
+  "column_break_dxri",
+  "type_of_error",
+  "other_type_of_error",
+  "incident_report_form",
+  "section_break_rjzw",
+  "description_of_event",
+  "section_break_vhhp",
+  "name_of_reporting_person",
+  "designation_of_reporting_person",
+  "patient_name",
+  "medication_in_question_reached",
+  "possible_causes_and_contributing_factors",
+  "intervention_done",
+  "column_break_yryh",
+  "diagnosis_of_patient",
+  "etails_of_medicines",
+  "outcome_of_the_event",
+  "naming_series",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fetch_from": "incident_report_form.time_and_date_of_incident",
+   "fieldname": "date_of_event",
+   "fieldtype": "Datetime",
+   "label": "Date and Time of Event"
+  },
+  {
+   "fieldname": "column_break_dxri",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "location_of_event",
+   "fieldtype": "Select",
+   "label": "Location of Event",
+   "options": "\nWard\nHigh Dependency Unit\nOPD\nOT\nPharmacy\nOther"
+  },
+  {
+   "fieldname": "type_of_error",
+   "fieldtype": "Select",
+   "label": "Type of Error",
+   "options": "\nPrescription\nAdministration\nTranscription\nOther"
+  },
+  {
+   "fieldname": "section_break_vhhp",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "patient_name",
+   "fieldtype": "Data",
+   "label": "Patient Name"
+  },
+  {
+   "fetch_from": "incident_report_form.text1",
+   "fieldname": "description_of_event",
+   "fieldtype": "Text",
+   "label": "Description of the event: (How did the event occur and how was it detected?)"
+  },
+  {
+   "fieldname": "medication_in_question_reached",
+   "fieldtype": "Select",
+   "label": "Did the medication in question reached the patient?",
+   "options": "\nYes\nNo"
+  },
+  {
+   "fieldname": "column_break_yryh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "diagnosis_of_patient",
+   "fieldtype": "Data",
+   "label": "Diagnosis of Patient"
+  },
+  {
+   "fieldname": "etails_of_medicines",
+   "fieldtype": "Data",
+   "label": "Details of medicines involved in the event: ( mention name of drugs, dose, frequency)"
+  },
+  {
+   "fieldname": "outcome_of_the_event",
+   "fieldtype": "Select",
+   "label": "Outcome of the event",
+   "options": "\nNo error - Events simply have potential to cause error.\nError but No Harm - Error did not reach patient.\nError but No Harm - Error reached the patient but no harm.\nError but No Harm - Error Reached the patient, no harm but requires monitoring.\nError + harm - Temporary harm requiring treatment.\nError + harm - Temporary harm requiring hospitalization.\nError + harm - Permanent Harm.\nError + harm - Near death event."
+  },
+  {
+   "fetch_from": "incident_report_form.full_name_of_reporting_person",
+   "fieldname": "name_of_reporting_person",
+   "fieldtype": "Data",
+   "label": "Name of Reporting Person"
+  },
+  {
+   "default": "MERF-.YY.-.####",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Naming Series",
+   "options": "MERF-.YY.-.####"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Medication Error Reporting Form",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "incident_report_form",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Incident Report Form",
+   "options": "Incident Report Form",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_rjzw",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fetch_from": "incident_report_form.reporting_in_capacity",
+   "fieldname": "designation_of_reporting_person",
+   "fieldtype": "Data",
+   "label": "Designation of Reporting Person"
+  },
+  {
+   "depends_on": "eval:doc.location_of_event == \"Other\"",
+   "fieldname": "other_location_of_event",
+   "fieldtype": "Data",
+   "label": "Other(Location of the Event)"
+  },
+  {
+   "depends_on": "eval:doc.type_of_error == \"Other\"",
+   "fieldname": "other_type_of_error",
+   "fieldtype": "Data",
+   "label": "Other(Type of error) "
+  },
+  {
+   "fieldname": "possible_causes_and_contributing_factors",
+   "fieldtype": "Table",
+   "label": "Possible Causes and Contributing factors",
+   "options": "Possible Causes"
+  },
+  {
+   "fieldname": "intervention_done",
+   "fieldtype": "Table",
+   "label": "Intervention Done",
+   "options": "Intervention done table"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-09-30 15:10:11.694688",
+ "modified_by": "Administrator",
+ "module": "CAPA",
+ "name": "Medication Error Reporting Form",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "track_seen": 1,
+ "track_views": 1
+}

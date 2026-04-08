@@ -1,0 +1,138 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2024-09-26 14:04:57.734025",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_uujq",
+  "problem_statement",
+  "why1",
+  "why2",
+  "why3",
+  "why4",
+  "why5",
+  "root_cause",
+  "amended_from",
+  "naming_series",
+  "column_break_vpad",
+  "incident_report_evaluation",
+  "medication_error_reporting_form",
+  "incident_report_form"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_uujq",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Five whys Analysis Tool",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "problem_statement",
+   "fieldtype": "Data",
+   "label": "Problem Statement"
+  },
+  {
+   "fieldname": "why1",
+   "fieldtype": "Data",
+   "label": "Why?"
+  },
+  {
+   "fieldname": "why2",
+   "fieldtype": "Data",
+   "label": "Why?"
+  },
+  {
+   "fieldname": "why3",
+   "fieldtype": "Data",
+   "label": "Why?"
+  },
+  {
+   "fieldname": "why4",
+   "fieldtype": "Data",
+   "label": "Why?"
+  },
+  {
+   "fieldname": "why5",
+   "fieldtype": "Data",
+   "label": "Why?"
+  },
+  {
+   "fetch_from": "incident_report_evaluation.text6",
+   "fieldname": "root_cause",
+   "fieldtype": "Small Text",
+   "label": "Root Cause"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Naming Series",
+   "options": "FWA-.YY.-",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_vpad",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "incident_report_evaluation",
+   "fieldtype": "Link",
+   "label": "Incident Report Evaluation",
+   "options": "Incident Report Evaluation"
+  },
+  {
+   "fetch_from": "incident_report_evaluation.medication_error_reporting_form",
+   "fieldname": "medication_error_reporting_form",
+   "fieldtype": "Link",
+   "label": "Medication Error Reporting Form",
+   "options": "Medication Error Reporting Form"
+  },
+  {
+   "fetch_from": "incident_report_evaluation.incident_report_form",
+   "fieldname": "incident_report_form",
+   "fieldtype": "Link",
+   "label": "Incident Report Form",
+   "options": "Incident Report Form"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-09-28 10:38:51.224156",
+ "modified_by": "Administrator",
+ "module": "CAPA",
+ "name": "Five whys Analysis Tool",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "track_seen": 1,
+ "track_views": 1
+}

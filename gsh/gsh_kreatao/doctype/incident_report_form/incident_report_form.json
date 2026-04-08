@@ -1,0 +1,166 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2024-07-23 23:30:21.893460",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "time_and_date_of_incident",
+  "severity_of_incident",
+  "clinical_incident_related_to",
+  "column_break_vpkg",
+  "incident_related_to",
+  "type_of_incident",
+  "naming_series",
+  "section_break_spiz",
+  "text1",
+  "text2",
+  "text3",
+  "text4",
+  "text5",
+  "section_break_zlbo",
+  "was_it_notified",
+  "other_person_involved",
+  "reporting_in_capacity",
+  "column_break_mxud",
+  "was_direct_supervisor",
+  "full_name_of_reporting_person",
+  "employee_id_number"
+ ],
+ "fields": [
+  {
+   "fieldname": "time_and_date_of_incident",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Time and Date of Incident",
+   "reqd": 1
+  },
+  {
+   "fieldname": "severity_of_incident",
+   "fieldtype": "Select",
+   "label": "Severity of Incident",
+   "options": "\n1\n2\n3\n4\n5"
+  },
+  {
+   "fieldname": "column_break_vpkg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "incident_related_to",
+   "fieldtype": "Select",
+   "label": "Incident Related to",
+   "options": "\nStaff\nEquipment/Property\nOutpatient\nInpatient\nVisitor"
+  },
+  {
+   "fieldname": "type_of_incident",
+   "fieldtype": "Select",
+   "label": "Type of Incident",
+   "options": "Communication Incident (includes verbal/physical abuse, harassment,\nmiscommunication between staff(handovers/reception & staff) or patients)\nClinical Incident [patient safety/identification/confidentiality compromise,\nimproper/absent consent, LAMA, infection control, imaging or lab or blood tranfusion\nissue, wrong site operation, )"
+  },
+  {
+   "fieldname": "clinical_incident_related_to",
+   "fieldtype": "Select",
+   "label": "Clinical Incident related to",
+   "options": "Delay in access to healthcare/treatment - at triage/site\nvisits/OPD/referrals/transfers"
+  },
+  {
+   "fieldname": "section_break_spiz",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "text1",
+   "fieldtype": "Text",
+   "label": "Description of incident: Brief description of what went wrong, who was involved, any other details etc"
+  },
+  {
+   "fieldname": "text2",
+   "fieldtype": "Text",
+   "label": "Briefly mention Immediate Corrective Actions and Outcome(please include time taken to resolve matter)"
+  },
+  {
+   "fieldname": "text3",
+   "fieldtype": "Text",
+   "label": "Contributing Factors(Consider system, staff,patient and visitor\u2019s issues-Mention any of these causative factors)"
+  },
+  {
+   "fieldname": "text4",
+   "fieldtype": "Text",
+   "label": "Kindly mention patient\u2019s demographics, assessment and list investigations and treatments. (Objective Information only)"
+  },
+  {
+   "fieldname": "text5",
+   "fieldtype": "Text",
+   "label": "Other technical or assisting pictographic evidence of the same?"
+  },
+  {
+   "fieldname": "section_break_zlbo",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "was_it_notified",
+   "fieldtype": "Data",
+   "label": "Was next of kin / guardian / patient notified?"
+  },
+  {
+   "fieldname": "other_person_involved",
+   "fieldtype": "Data",
+   "label": "Other persons involved"
+  },
+  {
+   "fieldname": "reporting_in_capacity",
+   "fieldtype": "Data",
+   "label": "Reporting in capacity of a ( Designation)"
+  },
+  {
+   "fieldname": "column_break_mxud",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "was_direct_supervisor",
+   "fieldtype": "Data",
+   "label": "Was Direct Supervisor and relevant medical staff notified? "
+  },
+  {
+   "fieldname": "full_name_of_reporting_person",
+   "fieldtype": "Data",
+   "label": "Full Name of Reporting Person"
+  },
+  {
+   "fieldname": "employee_id_number",
+   "fieldtype": "Data",
+   "label": "Employee ID number"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "IRF-.YY.-.#####"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-07-23 23:49:18.867290",
+ "modified_by": "Administrator",
+ "module": "GSH Kreatao",
+ "name": "Incident Report Form",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
