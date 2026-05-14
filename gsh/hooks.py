@@ -148,6 +148,8 @@ doc_events = {
     },
     "Shift Assignment": {
         "after_insert": "gsh.gsh_kreatao.custom_script.shift_assignment.add_shift_assignment_date_to_holiday_list",
+        "on_submit": "gsh.gsh_kreatao.custom_script.shift_assignment.add_shift_assignment_date_to_holiday_list",
+        "before_cancel": "gsh.gsh_kreatao.custom_script.shift_assignment.before_cancel_shift_assignment",
         "on_cancel": "gsh.gsh_kreatao.custom_script.shift_assignment.remove_shift_assignment_dates_from_holiday_list",
         "on_update_after_submit": "gsh.gsh_kreatao.custom_script.shift_assignment.update_shift_assignment_dates_in_holiday_list"
     },
@@ -200,6 +202,10 @@ scheduler_events = {
 # Overriding Methods
 # ------------------------------
 #
+override_whitelisted_methods = {
+    "hrms.hr.api.roster.insert_shift": "gsh.gsh_kreatao.custom_script.roster_override.insert_shift"
+}
+
 # override_whitelisted_methods = {
 # 	"frappe.desk.doctype.event.event.get_events": "gsh.event.get_events"
 # }
@@ -213,7 +219,7 @@ scheduler_events = {
 
 # exempt linked doctypes from being automatically cancelled
 #
-# auto_cancel_exempted_doctypes = ["Auto Repeat"]
+auto_cancel_exempted_doctypes = ["Attendance"]
 
 # Ignore links to specified DocTypes when deleting documents
 # -----------------------------------------------------------

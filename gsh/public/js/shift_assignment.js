@@ -1,15 +1,25 @@
-frappe.ui.form.on('Shift Assignment', {
-    shift_type: function(frm) {
-        if (frm.doc.shift_type == 'Public Holiday') {
-            frm.set_value('custom_holiday', 1);
-        } else {
-            frm.set_value('custom_holiday', 0);
-        }
+frappe.ui.form.on("Shift Assignment", {
+    refresh: function(frm) {
+        if (frm.doc.docstatus === 1) {
+            frm.page.btn_secondary.hide();  // hide default Cancel button
 
-        if (frm.doc.shift_type == 'Weekly Off') {
-            frm.set_value('custom_weekly_off', 1);
-        } else {
-            frm.set_value('custom_weekly_off', 0);
+            frm.add_custom_button(__("Cancel"), function() {
+                frappe.confirm(
+                    "Are you sure you want to cancel this Shift Assignment? Linked attendance will also be cancelled.",
+                    function() {
+                        frappe.call({
+                            method: "gsh.gsh_kreatao.custom_script.shift_assignment.force_cancel_shift_assignment",
+                            args: { docname: frm.doc.name },
+                            callback: function(r) {
+                                if (!r.exc) {
+                                    frappe.show_alert({ message: "Shift Assignment cancelled successfully.", indicator: "green" });
+                                    frm.reload_doc();
+                                }
+                            }
+                        });
+                    }
+                );
+            }).addClass("btn-danger");
         }
     }
 });
