@@ -1,12 +1,12 @@
 """
 Patch: Show NO instead of WO for NIGHT OFF in Roster MonthViewTable.vue
-Runs automatically on bench migrate via patches.txt
+NOTE: This is registered in patches.txt but also called directly from
+hooks.py after_migrate to ensure it re-applies if hrms is updated.
 """
 import os
 
 def execute():
     import frappe
-    # get_app_path returns apps/hrms/hrms — we need apps/hrms
     hrms_app_path = os.path.join(frappe.get_app_path("hrms"), "..")
     vue_path = os.path.abspath(os.path.join(hrms_app_path, "roster", "src", "components", "MonthViewTable.vue"))
 
@@ -15,7 +15,6 @@ def execute():
         return
 
     content = open(vue_path).read()
-
     old = "? '<strong>WO</strong>'"
     new = "? (events.data[employee.name][day.date].description === 'NIGHT OFF' ? '<strong>NO</strong>' : '<strong>WO</strong>')"
 
@@ -24,7 +23,7 @@ def execute():
         return
 
     if old not in content:
-        print("Pattern not found in MonthViewTable.vue — may have changed upstream.")
+        print("WARNING: Pattern not found in MonthViewTable.vue — Vue file may have changed upstream.")
         return
 
     content = content.replace(old, new)

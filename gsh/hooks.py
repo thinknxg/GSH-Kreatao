@@ -199,6 +199,9 @@ scheduler_events = {
 
 # before_tests = "gsh.install.before_tests"
 
+# After migrate — re-apply Vue patches in case hrms was updated
+after_migrate = ["gsh.patches.patch_roster_night_off.execute"]
+
 # Overriding Methods
 # ------------------------------
 #
