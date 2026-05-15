@@ -49,11 +49,6 @@ def add_shift_assignment_date_to_holiday_list(doc, method):
 
     holiday_list.save()
 
-    current_date = start
-    while current_date <= end:
-        _create_attendance_if_not_exists(doc.employee, doc.shift_type, current_date)
-        current_date += timedelta(days=1)
-
 
 def _create_attendance_if_not_exists(employee, shift_type, att_date):
     exists = frappe.db.exists("Attendance", {
@@ -222,38 +217,71 @@ def update_shift_assignment_dates_in_holiday_list(doc, method):
     holiday_list.save()
 
 
+def _patch_validate_attendance(doc):
+    """Patch hrms validate_attendance to ignore already-cancelled attendance."""
+    attendances = frappe.get_all(
+        "Attendance",
+        filters={
+            "employee": doc.employee,
+            "shift": doc.shift_type,
+            "attendance_date": ["between", [doc.start_date, doc.end_date]],
+            "docstatus": 1  # only submitted — ignore cancelled
+        },
+        pluck="name",
+    )
+    if attendances:
+        frappe.throw(
+            f"Cannot cancel Shift Assignment: {doc.name} as it is linked to submitted Attendance: {attendances[0]}"
+        )
+
+
 @frappe.whitelist()
 def force_cancel_shift_assignment(docname):
-    """Cancel Shift Assignment ignoring linked Employee Checkins,
-    then clean up Attendance and Holiday List."""
+    """Cancel Shift Assignment:
+    1. Cancel all linked Attendance records first (so hrms validate_attendance passes)
+    2. Then cancel Shift Assignment
+    3. on_cancel hook removes from Holiday List automatically
+    """
     doc = frappe.get_doc("Shift Assignment", docname)
 
     if doc.docstatus != 1:
         frappe.throw("Shift Assignment is not submitted.")
 
-    # Step 1: Cancel Attendance linked to this shift assignment
-    if doc.shift_type in SHIFT_TYPES_TO_REMOVE:
-        start_date = getdate(doc.start_date)
-        end_date = getdate(doc.end_date or doc.start_date)
-        current = start_date
-        while current <= end_date:
-            att_name = frappe.db.get_value("Attendance", {
-                "employee": doc.employee,
-                "attendance_date": current,
-                "shift": doc.shift_type,
-                "docstatus": 1
-            })
-            if att_name:
-                try:
-                    frappe.get_doc("Attendance", att_name).cancel()
-                    frappe.db.commit()
-                except Exception as e:
-                    frappe.log_error(str(e), "Attendance Cancel in force_cancel")
-            current += timedelta(days=1)
+    start_date = getdate(doc.start_date)
+    end_date = getdate(doc.end_date or doc.start_date)
 
-    # Step 2: Cancel Shift Assignment ignoring linked doc check
-    doc.flags.ignore_links = True
-    doc.cancel()
-    frappe.db.commit()
+    # Step 1: Cancel ALL attendance for this employee in date range
+    # (no shift filter — hrms checks employee + date, not shift)
+    current = start_date
+    while current <= end_date:
+        att_records = frappe.get_all("Attendance", filters={
+            "employee": doc.employee,
+            "attendance_date": current,
+            "docstatus": 1
+        }, pluck="name")
+
+        for att_name in att_records:
+            try:
+                att_doc = frappe.get_doc("Attendance", att_name)
+                att_doc.flags.ignore_links = True
+                att_doc.cancel()
+                frappe.db.commit()
+            except Exception as e:
+                frappe.log_error(str(e), "Attendance Cancel in force_cancel")
+
+        current += timedelta(days=1)
+
+    # Step 2: Monkey-patch validate_attendance to ignore cancelled records
+    import hrms.hr.doctype.shift_assignment.shift_assignment as sa_module
+    original_validate = sa_module.ShiftAssignment.validate_attendance
+    sa_module.ShiftAssignment.validate_attendance = _patch_validate_attendance
+
+    try:
+        doc.flags.ignore_links = True
+        doc.cancel()
+        frappe.db.commit()
+    finally:
+        # Always restore original method
+        sa_module.ShiftAssignment.validate_attendance = original_validate
 
     return "Cancelled successfully"

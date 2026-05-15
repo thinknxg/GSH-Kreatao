@@ -1,11 +1,7 @@
-# GSH Override for Monthly Attendance Sheet
-# Patches HRMS module before execute is called
-
 import frappe
 from frappe.utils import getdate
 from datetime import date
 
-# Change 1: status_map with Night Off added
 status_map = {
     "Present": "P",
     "Absent": "A",
@@ -18,102 +14,132 @@ status_map = {
     "Night Off": "NO",
 }
 
-
-# Change 2: colors with Night Off color
-def get_message() -> str:
-    message = ""
-    colors = [
-        "green", "red", "orange", "#914EE3", "green",
-        "#3187D8", "#878787", "#878787", "#1a1a6e",
-    ]
-    count = 0
-    for status, abbr in status_map.items():
-        message += f"""
-            <span style='border-left: 2px solid {colors[count]}; padding-right: 12px; padding-left: 5px; margin-right: 3px;'>
-                {frappe._(status)} - {abbr}
-            </span>
-        """
-        count += 1
-    return message
+SHIFT_STATUS_OVERRIDE = {
+    "NIGHT OFF": "Night Off",
+    "Weekly Off": "Weekly Off",
+    "On Call Shift": "Weekly Off",
+    "On Call Day": "Weekly Off",
+    "On Call Night": "Weekly Off",
+    "Public Holiday": "Holiday",
+}
 
 
-# Change 3: get_holiday_status with Night Off check
-def get_holiday_status(holiday_date: date, holidays: list) -> str:
-    status = None
+def get_holiday_status(holiday_date, holidays):
     if holidays:
         for holiday in holidays:
             if holiday_date == holiday.get("holiday_date"):
                 if holiday.get("weekly_off"):
                     if holiday.get("description") == "NIGHT OFF":
-                        status = "Night Off"
-                    else:
-                        status = "Weekly Off"
-                else:
-                    status = "Holiday"
-                break
-    return status
+                        return "Night Off"
+                    return "Weekly Off"
+                return "Holiday"
+    return None
 
 
-def _patch_mas_module():
-    import hrms.hr.report.monthly_attendance_sheet.monthly_attendance_sheet as mas
+def get_message():
+    colors = ["green", "red", "orange", "#914EE3", "green", "#3187D8", "#878787", "#878787", "#1a1a6e"]
+    message = ""
+    count = 0
+    for status, abbr in status_map.items():
+        color = colors[count] if count < len(colors) else "#000"
+        message += f"<span style='border-left: 2px solid {color}; padding-right: 12px; padding-left: 5px; margin-right: 3px;'>{frappe._(status)} - {abbr}</span>"
+        count += 1
+    return message
 
-    # Patch status_map and functions
-    mas.status_map = status_map
-    mas.get_message = get_message
-    mas.get_holiday_status = get_holiday_status
 
-    # Change 4: patch get_attendance_status_for_detailed_view
-    from hrms.hr.report.monthly_attendance_sheet.monthly_attendance_sheet import get_dates_in_period
-
-    def get_attendance_status_for_detailed_view(employee, filters, employee_attendance, holidays):
-        total_days = get_dates_in_period(filters)
-        attendance_values = []
-        for shift, status_dict in employee_attendance.items():
-            row = {"shift": shift}
-            for d in total_days:
-                d = getdate(d)
-                status = status_dict.get(d)
-                if shift == "NIGHT OFF" and status == "Present":
-                    status = "Night Off"
-                if status is None and holidays:
-                    status = get_holiday_status(d, holidays)
-                abbr = status_map.get(status, "")
-                row[d.strftime("%d-%m-%Y")] = abbr
-            attendance_values.append(row)
-        return attendance_values
-
-    mas.get_attendance_status_for_detailed_view = get_attendance_status_for_detailed_view
-
-    # Change 5: patch get_attendance_status_for_summarized_view
-    from hrms.hr.report.monthly_attendance_sheet.monthly_attendance_sheet import get_attendance_summary_and_days
-
-    def get_attendance_status_for_summarized_view(employee, filters, holidays, joined_in_current_period, joined_date):
-        summary, attendance_days = get_attendance_summary_and_days(employee, filters)
-        if not any(summary.values()):
-            return {}
-        total_days = get_dates_in_period(filters)
-        total_holidays = total_unmarked_days = 0
-        for d in total_days:
-            d = getdate(d)
-            if d.day in attendance_days or (joined_in_current_period and d < joined_date):
-                continue
-            status = get_holiday_status(d, holidays)
-            if status in ["Weekly Off", "Night Off", "Holiday"]:
-                total_holidays += 1
-            elif not status:
-                total_unmarked_days += 1
-        return {
-            "total_present": summary.total_present + summary.total_half_days,
-            "total_leaves": summary.total_leaves + summary.total_half_days,
-            "total_absent": summary.total_absent,
-            "total_holidays": total_holidays,
-            "unmarked_days": total_unmarked_days,
-        }
-
-    mas.get_attendance_status_for_summarized_view = get_attendance_status_for_summarized_view
+def get_holiday_map_with_description(filters):
+    from hrms.hr.report.monthly_attendance_sheet.monthly_attendance_sheet import get_date_condition
+    holiday_lists = frappe.db.get_all("Holiday List", pluck="name")
+    default_holiday_list = frappe.get_cached_value("Company", filters.company, "default_holiday_list")
+    holiday_lists.append(default_holiday_list)
+    holiday_map = frappe._dict()
+    Holiday = frappe.qb.DocType("Holiday")
+    holiday_condition = get_date_condition(Holiday.holiday_date, filters)
+    for d in holiday_lists:
+        if not d:
+            continue
+        holidays = (
+            frappe.qb.from_(Holiday)
+            .select(Holiday.holiday_date, Holiday.weekly_off, Holiday.description)
+            .where((Holiday.parent == d) & (holiday_condition))
+        ).run(as_dict=True)
+        holiday_map.setdefault(d, holidays)
+    return holiday_map
 
 
 def execute(filters=None):
-    _patch_mas_module()
-    from hrms.hr.report.monthly_attendance_sheet.monthly_attendance_sheet import execute as original_execute
-    return original_execute(filters)
+    import hrms.hr.report.monthly_attendance_sheet.monthly_attendance_sheet as mas
+    from frappe.utils.nestedset import get_descendants_of
+    from hrms.utils import date_diff
+
+    filters = frappe._dict(filters or {})
+
+    if not filters.filter_based_on:
+        frappe.throw(frappe._("Please select Filter Based On"))
+    if filters.filter_based_on == "Month" and not (filters.month and filters.year):
+        frappe.throw(frappe._("Please select month and year."))
+    if filters.filter_based_on == "Date Range":
+        if not (filters.start_date and filters.end_date):
+            frappe.throw(frappe._("Please set the date range."))
+        if getdate(filters.start_date) > getdate(filters.end_date):
+            frappe.throw(frappe._("Start date cannot be greater than end date."))
+        if date_diff(filters.end_date, filters.start_date) > 90:
+            frappe.throw(frappe._("Please set a date range less than 90 days."))
+    if not filters.company:
+        frappe.throw(frappe._("Please select company."))
+
+    filters.companies = [filters.company]
+    if filters.include_company_descendants:
+        filters.companies.extend(get_descendants_of("Company", filters.company))
+
+    attendance_map = mas.get_attendance_map(filters)
+    if not attendance_map:
+        frappe.msgprint(frappe._("No attendance records found."), alert=True, indicator="orange")
+        return [], [], None, None
+
+    columns = mas.get_columns(filters)
+    employee_details, group_by_param_values = mas.get_employee_related_details(filters)
+    holiday_map = get_holiday_map_with_description(filters)
+
+    data = []
+    default_holiday_list = frappe.get_cached_value("Company", filters.company, "default_holiday_list")
+
+    for employee, details in employee_details.items():
+        emp_holiday_list = details.holiday_list or default_holiday_list
+        holidays = holiday_map.get(emp_holiday_list)
+        employee_attendance = attendance_map.get(employee)
+        if not employee_attendance:
+            continue
+
+        for shift, status_dict in employee_attendance.items():
+            from hrms.hr.report.monthly_attendance_sheet.monthly_attendance_sheet import get_dates_in_period
+            total_days = get_dates_in_period(filters)
+            row = {"shift": shift, "employee": employee, "employee_name": details.employee_name}
+
+            for d in total_days:
+                d = getdate(d)
+                status = status_dict.get(d)
+
+                if status == "Absent" and shift in SHIFT_STATUS_OVERRIDE:
+                    status = SHIFT_STATUS_OVERRIDE[shift]
+                elif status is None and holidays:
+                    holiday_status = get_holiday_status(d, holidays)
+                    if holiday_status == "Night Off" and shift == "NIGHT OFF":
+                        status = "Night Off"
+                    elif holiday_status == "Weekly Off" and shift == "Weekly Off":
+                        status = "Weekly Off"
+                    elif holiday_status == "Holiday":
+                        status = "Holiday"
+
+                abbr = status_map.get(status, "")
+                row[d.strftime("%d-%m-%Y")] = abbr
+
+            data.append(row)
+
+    if not data:
+        frappe.msgprint(frappe._("No attendance records found for this criteria."), alert=True, indicator="orange")
+        return columns, [], None, None
+
+    message = get_message() if not filters.summarized_view else ""
+    chart = mas.get_chart_data(attendance_map, filters)
+    return columns, data, message, chart
