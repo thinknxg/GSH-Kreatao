@@ -10,7 +10,7 @@ frappe.ui.form.on("Salary Transfer Certificate", {
             let parts = certificate_date.split("-");
             let formatted_date = parts[2] + "/" + parts[1] + "/" + parts[0];
             if (!frm.doc.content_1) {
-                frm.set_value("content_1", `<p style="margin:0;padding:0;"><b>Re Number: ${re_number}</b></p><p style="margin:0;padding:0;"><b>Date: ${formatted_date}</b></p><p style="text-align:center;margin:0;padding:0;"><u><b>SALARY TRANSFER CERTIFICATE</b></u></p>`);
+                frm.set_value("content_1", `<p style="margin:0;padding:0;"><b>Re Number: ${re_number}</b></p><p style="margin:0;padding:0;"><b>Date: ${formatted_date}</b></p><br><p style="text-align:center;margin:0;padding:0;"><u><b>SALARY TRANSFER CERTIFICATE</b></u></p>`);
             }
             if (!frm.doc.content_2) {
                 frm.set_value("content_2", `<div style="text-align: justify;"><p>This is to certify that the above-mentioned employee is working in Gulf Medical Integrated Services L.L.C as per the information provided above. Furthermore, as per the request we confirm that his/her monthly pay will be transferred to the above-mentioned bank account.</p><p>This certificate has been issued at the request of the employee without any liability or commitment on the part of Gulf Medical Integrated Services L.L.C toward any third party whatsoever.</p><p><b>"The validity of the certificate shall be one month from the date of issue."</b></p><br><br><p><b>Your Sincerely,</b></p><br><br><p><b>Zuhair Al Abduwani<br>CEO</b></p></div>`);
