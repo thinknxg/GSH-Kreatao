@@ -42,12 +42,20 @@ def add_shift_assignment_date_to_holiday_list(doc, method):
                 "holiday_date": current_date,
                 "description": f"{doc.shift_type}"
             }
-            if doc.shift_type in SHIFT_TYPES_WEEKLY_OFF:
+            if doc.shift_type in SHIFT_TYPES_WEEKLY_OFF and doc.shift_type != "NIGHT OFF":
                 entry["weekly_off"] = 1
+            if doc.shift_type == "NIGHT OFF":
+                entry["custom_night_off"] = 1
+                entry["weekly_off"] = 0
             holiday_list.append("holidays", entry)
         current_date += timedelta(days=1)
 
     holiday_list.save()
+
+    current_date = start
+    while current_date <= end:
+        _create_attendance_if_not_exists(doc.employee, doc.shift_type, current_date)
+        current_date += timedelta(days=1)
 
 
 def _create_attendance_if_not_exists(employee, shift_type, att_date):

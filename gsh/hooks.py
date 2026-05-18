@@ -296,6 +296,10 @@ fixtures=[
                     "Employee-custom_over_time_rate",
                     "Employee-custom_late_entry_rate",
                     "Attendance Request-custom_overtime_hours",
+                    "Shift Type-custom_split_shift",
+                    "Shift Type-custom_break_start_time",
+                    "Shift Type-custom_break_end_time",
+                    "Holiday-custom_night_off"
                     
                  ]
             ]

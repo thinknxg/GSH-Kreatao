@@ -28,11 +28,12 @@ def get_holiday_status(holiday_date, holidays):
     if holidays:
         for holiday in holidays:
             if holiday_date == holiday.get("holiday_date"):
-                if holiday.get("weekly_off"):
-                    if holiday.get("description") == "NIGHT OFF":
-                        return "Night Off"
+                if holiday.get("custom_night_off"):
+                    return "Night Off"
+                elif holiday.get("weekly_off"):
                     return "Weekly Off"
-                return "Holiday"
+                else:
+                    return "Holiday"
     return None
 
 
@@ -60,7 +61,7 @@ def get_holiday_map_with_description(filters):
             continue
         holidays = (
             frappe.qb.from_(Holiday)
-            .select(Holiday.holiday_date, Holiday.weekly_off, Holiday.description)
+            .select(Holiday.holiday_date, Holiday.weekly_off, Holiday.description, Holiday.custom_night_off)
             .where((Holiday.parent == d) & (holiday_condition))
         ).run(as_dict=True)
         holiday_map.setdefault(d, holidays)

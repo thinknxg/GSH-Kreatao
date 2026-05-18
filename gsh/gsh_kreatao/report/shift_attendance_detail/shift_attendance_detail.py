@@ -296,10 +296,10 @@ def is_night_off(date, employee, company):
     if emp_holiday_list:
         result = frappe.db.get_value(
             "Holiday",
-            {"parent": emp_holiday_list, "holiday_date": date, "weekly_off": 1},
-            "description"
+            {"parent": emp_holiday_list, "holiday_date": date},
+            "custom_night_off"
         )
-        if result == "NIGHT OFF":
+        if result:
             return True
     return False
 
@@ -362,8 +362,8 @@ def resolve_final_status(entry, date, employee, company):
             full_status = "Holiday"
 
         elif is_wo:
-            description = frappe.db.get_value("Holiday", {"parent": frappe.db.get_value("Employee", employee, "holiday_list"), "holiday_date": date}, "description")
-            if description == "NIGHT OFF":
+            night_off = frappe.db.get_value("Holiday", {"parent": frappe.db.get_value("Employee", employee, "holiday_list"), "holiday_date": date}, "custom_night_off")
+            if night_off:
                 full_status = "Night Off"
             else:
                 full_status = "Weekly Off"
