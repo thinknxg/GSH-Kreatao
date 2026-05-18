@@ -328,10 +328,12 @@ def resolve_final_status(entry, date, employee, company):
     full_status = entry.status or ""
     # Override based on shift type for Weekly Off and Night Off
     entry_shift = getattr(entry, "shift", None)
-    if full_status == "Present" and entry_shift == "Weekly Off":
+    if entry_shift == "Weekly Off" and full_status in ("Present", "Absent"):
         full_status = "Weekly Off"
-    elif full_status == "Present" and entry_shift == "NIGHT OFF":
+    elif entry_shift == "NIGHT OFF" and full_status in ("Present", "Absent"):
         full_status = "Night Off"
+    elif entry_shift in ("On Call Shift", "On Call Day", "On Call Night") and full_status in ("Present", "Absent"):
+        full_status = "Weekly Off"
 
     # Half Day
     if full_status == "Half Day":
