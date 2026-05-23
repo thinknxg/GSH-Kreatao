@@ -154,7 +154,10 @@ doc_events = {
         "on_update_after_submit": "gsh.gsh_kreatao.custom_script.shift_assignment.update_shift_assignment_dates_in_holiday_list"
     },
     "Holiday List": {
-        "validate": "gsh.gsh_kreatao.custom_script.holiday_list.update_other_holiday_lists"
+        "validate": [
+            "gsh.gsh_kreatao.custom_script.holiday_list.update_other_holiday_lists",
+            "gsh.gsh_kreatao.custom_script.holiday_list.cancel_shift_assignments_for_removed_wo_no"
+        ]
     }
 }
 
@@ -174,7 +177,10 @@ scheduler_events = {
         "59 23 * * *": [
             "gsh.gsh_kreatao.custom_script.mark_attendance.schedule_mark_attendance"
         ]
-    }
+    },
+    "hourly": [
+        "gsh.patches.disable_prepared_reports.execute"
+    ]
 }
 # scheduler_events = {
 # 	"all": [

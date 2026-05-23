@@ -52,10 +52,6 @@ def add_shift_assignment_date_to_holiday_list(doc, method):
 
     holiday_list.save()
 
-    current_date = start
-    while current_date <= end:
-        _create_attendance_if_not_exists(doc.employee, doc.shift_type, current_date)
-        current_date += timedelta(days=1)
 
 
 def _create_attendance_if_not_exists(employee, shift_type, att_date):
@@ -143,7 +139,9 @@ def before_cancel_shift_assignment(doc, method):
 
 
 def remove_shift_assignment_dates_from_holiday_list(doc, method):
-    """After cancelling Shift Assignment — remove from Holiday List."""
+    """After cancelling Shift Assignment — remove from Holiday List.
+    Only remove dates not covered by any other active shift assignment of the same type.
+    """
     if doc.shift_type not in SHIFT_TYPES_TO_REMOVE:
         return
 
@@ -156,10 +154,30 @@ def remove_shift_assignment_dates_from_holiday_list(doc, method):
     start_date = getdate(doc.start_date)
     end_date = getdate(doc.end_date or doc.start_date)
 
+    # Find all other active shift assignments of same type for this employee
+    other_assignments = frappe.get_all("Shift Assignment", filters={
+        "employee": doc.employee,
+        "shift_type": doc.shift_type,
+        "docstatus": 1,
+        "name": ["!=", doc.name]
+    }, fields=["start_date", "end_date"])
+
+    # Build set of dates still covered by other assignments
+    still_covered = set()
+    for sa in other_assignments:
+        sa_start = getdate(sa.start_date)
+        sa_end = getdate(sa.end_date or sa.start_date)
+        current = sa_start
+        while current <= sa_end:
+            still_covered.add(current)
+            current += timedelta(days=1)
+
+    # Only remove dates that are NOT still covered
     dates_to_remove = []
     current_date = start_date
     while current_date <= end_date:
-        dates_to_remove.append(current_date)
+        if current_date not in still_covered:
+            dates_to_remove.append(current_date)
         current_date += timedelta(days=1)
 
     holiday_list.holidays = [

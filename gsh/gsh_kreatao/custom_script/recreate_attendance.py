@@ -4,7 +4,7 @@ from datetime import timedelta
 
 def execute():
     shifts = frappe.get_all("Shift Assignment",
-        filters={"shift_type": ["in", ["Weekly Off", "NIGHT OFF", "On Call Shift", "On Call Day", "On Call Night"]], "docstatus": 1},
+        filters={"shift_type": ["in", ["On Call Shift", "On Call Day", "On Call Night"]], "docstatus": 1},
         fields=["name", "employee", "shift_type", "start_date", "end_date"]
     )
     print("Total shift assignments:", len(shifts))

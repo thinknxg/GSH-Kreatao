@@ -183,7 +183,8 @@ def get_data(filters, first_day, last_day):
             fieldname = f"day_{day_index}"
 
             if "NA" in employee_map[emp_display][fieldname]:
-                employee_map[emp_display][fieldname] = row.shift_type
+                if row.shift_type not in ("Weekly Off", "NIGHT OFF", "On Call Shift", "On Call Day", "On Call Night"):
+                    employee_map[emp_display][fieldname] = row.shift_type
 
             current_date += timedelta(days=1)
 
