@@ -136,7 +136,8 @@ doc_events = {
         "on_update_after_submit": "gsh.gsh_kreatao.custom_script.attendance.create_compensatory_leave"
     },
     "Employee Checkin": {
-        "before_save": "gsh.gsh_kreatao.custom_script.employee_checkin.fetch_shift_assignment"
+        "before_save": "gsh.gsh_kreatao.custom_script.employee_checkin.fetch_shift_assignment",
+        "on_update": "gsh.hr.notifications.checkin_notifications.on_checkin_update"
     },
     "Leave Application": {
         "before_save": "gsh.gsh_kreatao.custom_script.leave_application.update_custom_approval_fields",
