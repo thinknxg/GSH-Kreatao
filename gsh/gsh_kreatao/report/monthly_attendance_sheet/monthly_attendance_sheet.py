@@ -125,9 +125,9 @@ def execute(filters=None):
                     status = SHIFT_STATUS_OVERRIDE[shift]
                 elif status is None and holidays:
                     holiday_status = get_holiday_status(d, holidays)
-                    if holiday_status == "Night Off" and shift == "NIGHT OFF":
+                    if holiday_status == "Night Off":
                         status = "Night Off"
-                    elif holiday_status == "Weekly Off" and shift == "Weekly Off":
+                    elif holiday_status == "Weekly Off":
                         status = "Weekly Off"
                     elif holiday_status == "Holiday":
                         status = "Holiday"
