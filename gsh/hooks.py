@@ -136,8 +136,7 @@ doc_events = {
         "on_update_after_submit": "gsh.gsh_kreatao.custom_script.attendance.create_compensatory_leave"
     },
     "Employee Checkin": {
-        "before_save": "gsh.gsh_kreatao.custom_script.employee_checkin.fetch_shift_assignment",
-        "on_update": "gsh.hr.notifications.checkin_notifications.on_checkin_update"
+        "before_save": "gsh.gsh_kreatao.custom_script.employee_checkin.fetch_shift_assignment"
     },
     "Leave Application": {
         "before_save": "gsh.gsh_kreatao.custom_script.leave_application.update_custom_approval_fields",
@@ -149,7 +148,6 @@ doc_events = {
     },
     "Shift Assignment": {
         "after_insert": "gsh.gsh_kreatao.custom_script.shift_assignment.add_shift_assignment_date_to_holiday_list",
-        "on_submit": "gsh.gsh_kreatao.custom_script.shift_assignment.add_shift_assignment_date_to_holiday_list",
         "before_cancel": "gsh.gsh_kreatao.custom_script.shift_assignment.before_cancel_shift_assignment",
         "on_cancel": "gsh.gsh_kreatao.custom_script.shift_assignment.remove_shift_assignment_dates_from_holiday_list",
         "on_update_after_submit": "gsh.gsh_kreatao.custom_script.shift_assignment.update_shift_assignment_dates_in_holiday_list"
@@ -313,6 +311,12 @@ fixtures=[
                     
                  ]
             ]
+        ]
+    },
+    {
+        "doctype": "Report",
+        "filters": [
+            ["name", "in", ["Unmarked Attendance Days", "Staff Roster Report"]]
         ]
     }
 ]
